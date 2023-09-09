@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5127e21-0f90-4960-9430-f32af7d02bd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/main.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/test/java/org/example/MainTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -110,7 +111,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1694281191006</updated>
-      <workItem from="1694281192018" duration="2819000" />
+      <workItem from="1694281192018" duration="3418000" />
     </task>
     <servers />
   </component>
