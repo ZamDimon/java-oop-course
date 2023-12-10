@@ -2,6 +2,11 @@ package org.turnBasedFighting.game;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -146,5 +151,34 @@ fight(unit_1, unit_2)''',
 
         Game.FightResult resultFight2 = Game.fight(unit2, unit3);
         assertEquals(resultFight2, Game.FightResult.SECOND_WIN);
+    }
+
+    // A couple of parameterized tests for learning how they function
+    @ParameterizedTest
+    @MethodSource("warriorsPairsFirstWins")
+    @DisplayName("First unit should win")
+    void firstUnitWins(IUnit first, IUnit second) {
+        assertEquals(Game.fight(first, second), Game.FightResult.FIRST_WIN);
+    }
+
+    static Stream<Arguments> warriorsPairsFirstWins() {
+        return Stream.of(
+                Arguments.arguments(UnitClass.WARRIOR.make(), UnitClass.WARRIOR.make()),
+                Arguments.arguments(UnitClass.KNIGHT.make(), UnitClass.WARRIOR.make()),
+                Arguments.arguments(UnitClass.KNIGHT.make(), UnitClass.KNIGHT.make())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("warriorsPairsSecondWins")
+    @DisplayName("Second unit should win")
+    void secondUnitWins(IUnit first, IUnit second) {
+        assertEquals(Game.fight(first, second), Game.FightResult.SECOND_WIN);
+    }
+
+    static Stream<Arguments> warriorsPairsSecondWins() {
+        return Stream.of(
+                Arguments.arguments(UnitClass.WARRIOR.make(), UnitClass.KNIGHT.make())
+        );
     }
 }
