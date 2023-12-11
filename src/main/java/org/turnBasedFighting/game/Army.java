@@ -8,7 +8,12 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class Army implements Iterable<IUnit> {
-    private Queue<IUnit> troops = new ArrayDeque<>();
+    // Identifier
+    private static int idCounter = 0;
+    private final int id = ++idCounter;
+
+    // Data structure to store units
+    private final Queue<IUnit> troops = new ArrayDeque<>();
 
     public Army addUnits(Supplier<IUnit> unitFactory, int number) {
         IntStream.rangeClosed(1, number).forEach(i -> troops.add(unitFactory.get()));
@@ -38,5 +43,12 @@ public class Army implements Iterable<IUnit> {
             if (!hasNext()) throw new NoSuchElementException();
             return troops.peek();
         }
+    }
+
+    @Override
+    public String toString() {
+        String armyName = getClass().getSimpleName().toUpperCase();
+        return armyName + "#" + id +
+                "{troops=" + troops + "}";
     }
 }

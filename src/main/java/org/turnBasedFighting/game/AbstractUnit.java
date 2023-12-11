@@ -4,9 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AbstractUnit implements IUnit {
+    // Unit stats
     private final int initialHealth;
     private int health;
     private int attack;
+
+    // Unit identifier
+    private static int idCounter = 0;
+    private final int id = ++idCounter;
 
     public AbstractUnit(int health, int attack) {
         this.initialHealth = health;
@@ -33,31 +38,11 @@ public class AbstractUnit implements IUnit {
         setHealth(getHealth() + healing);
     }
 
-    @Override
-    public boolean isAlive() {
-        return getHealth() > 0;
-    }
-
-    /** Function for hitting another warrior
-     * @param target - Warrior to hit
-     * @return Whether the target was killed
-     */
-    @Override
-    public boolean hit(IUnit target) {
-        log.debug("{} tries to hit {}", this, target);
-
-        if (target instanceof AbstractUnit abstractTarget) {
-            return abstractTarget.acceptDamage(getAttack());
-        }
-
-        throw new IllegalArgumentException("Unsupported type");
-    }
-
     /** Function for getting damage from another entity
      * @param damage - Damage to be taken
      * @return Whether the unit was killed
      */
-    protected boolean acceptDamage(int damage) {
+    public boolean acceptDamage(int damage) {
         log.debug("Unit {} accepts {} damage", this, damage);
 
         setHealth(getHealth() - damage);
@@ -67,7 +52,7 @@ public class AbstractUnit implements IUnit {
     @Override
     public String toString() {
         String className = getClass().getSimpleName().toUpperCase();
-        return className +
+        return className + "#" + id +
                 "{health=" + getHealth() +
                 ",attack=" + getAttack() +
                 "}";

@@ -1,6 +1,6 @@
 package org.turnBasedFighting.game;
 
-public class Vampire extends AbstractUnit implements IUnit, IVampirable{
+public class Vampire extends AbstractUnit implements IVampirable{
     static final int DEFAULT_HEALTH = 40;
     static final int DEFAULT_ATTACK = 4;
     static final int DEFAULT_VAMPIRING = 50;
@@ -14,20 +14,15 @@ public class Vampire extends AbstractUnit implements IUnit, IVampirable{
     }
 
     @Override
-    public boolean hit(IUnit target) {
-        if (target instanceof AbstractUnit abstractUnit) {
-            // Dealing damage and fixating health before and after
-            int healthBefore = abstractUnit.getHealth();
-            boolean killed = super.hit(target);
-            int healthAfter = abstractUnit.getHealth();
+    public void hit(IHittable target) {
+        // Dealing damage and fixating health before and after
+        int healthBefore = target.getHealth();
+        super.hit(target);
+        int healthAfter = target.getHealth();
 
-            // Healing yourself
-            int dealtDamage = healthBefore - healthAfter;
-            healSelf(calculateHealingFromDamage(dealtDamage));
-            return killed;
-        }
-
-        throw new IllegalArgumentException("Unsupported type");
+        // Healing yourself
+        int dealtDamage = healthBefore - healthAfter;
+        healSelf(calculateHealingFromDamage(dealtDamage));
     }
 
     private int calculateHealingFromDamage(int dealtDamage) {

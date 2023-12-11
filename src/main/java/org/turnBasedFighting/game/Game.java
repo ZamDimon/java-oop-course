@@ -1,5 +1,8 @@
 package org.turnBasedFighting.game;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Game {
     public enum FightResult {
         FIRST_WIN,
@@ -9,14 +12,18 @@ public class Game {
 
     public static FightResult fight(IUnit first, IUnit second) {
         while(first.isAlive() && second.isAlive()) {
-            if (first.hit(second)) return FightResult.FIRST_WIN;
-            if (second.hit(first)) return FightResult.SECOND_WIN;
+            first.hit(second);
+            if (!second.isAlive()) return FightResult.FIRST_WIN;
+            second.hit(first);
+            if (!first.isAlive()) return FightResult.SECOND_WIN;
         }
 
         return FightResult.UNDEFINED;
     }
 
     public static FightResult fight(Army first, Army second) {
+        log.debug("Army {} fights against army {}", first, second);
+
         var iteratorFirst = first.iterator();
         var iteratorSecond = second.iterator();
 
