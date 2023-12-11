@@ -221,4 +221,18 @@ fight(unit_1, unit_2)''',
         assertEquals(Game.fight(myArmy1, enemyArmy1), Game.FightResult.SECOND_WIN);
         assertEquals(Game.fight(myArmy2, enemyArmy2), Game.FightResult.FIRST_WIN);
     }
+
+    @Test
+    void DefenderVsVampire() {
+        var defender = UnitType.DEFENDER.make();
+        var vampire = UnitType.VAMPIRE.make();
+
+        var result = Game.fight(defender, vampire);
+
+        assertAll(
+                () -> assertEquals(result, Game.FightResult.FIRST_WIN),
+                () -> assertEquals(22, defender.getHealth()),
+                () -> assertEquals(-1, vampire.getHealth())
+        );
+    }
 }

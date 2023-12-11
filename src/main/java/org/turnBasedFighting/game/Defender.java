@@ -1,5 +1,8 @@
 package org.turnBasedFighting.game;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Defender extends AbstractUnit implements IUnit, IHasDefence {
     static final int DEFAULT_HEALTH = 60;
     static final int DEFAULT_ATTACK = 3;

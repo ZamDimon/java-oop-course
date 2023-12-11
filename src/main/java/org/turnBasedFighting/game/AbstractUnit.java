@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AbstractUnit implements IUnit {
+    private final int initialHealth;
     private int health;
     private int attack;
 
     public AbstractUnit(int health, int attack) {
+        this.initialHealth = health;
         this.health = health;
         this.attack = attack;
     }
@@ -22,8 +24,13 @@ public class AbstractUnit implements IUnit {
         return health;
     }
 
-    protected void setHealth(int newHealth) {
-        this.health = newHealth;
+    private void setHealth(int newHealth) {
+        this.health = Math.min(newHealth, initialHealth);
+    }
+
+    protected void healSelf(int healing) {
+        log.debug("{} tries to heal himself on {}", this, healing);
+        setHealth(getHealth() + healing);
     }
 
     @Override
