@@ -39,6 +39,18 @@ class ArmiesBattleTest {
                         new Army()
                                 .addUnits(UnitType.WARRIOR, 20)
                                 .addUnits(UnitType.KNIGHT, 5)
+                ),
+                Arguments.arguments(
+                        new Army()
+                                .addUnits(UnitType.DEFENDER, 2)
+                                .addUnits(UnitType.VAMPIRE, 2)
+                                .addUnits(UnitType.LANCER, 4)
+                                .addUnits(UnitType.WARRIOR, 1),
+                        new Army()
+                                .addUnits(UnitType.WARRIOR, 2)
+                                .addUnits(UnitType.LANCER, 2)
+                                .addUnits(UnitType.DEFENDER, 2)
+                                .addUnits(UnitType.VAMPIRE, 3)
                 )
         );
     }
@@ -66,6 +78,16 @@ class ArmiesBattleTest {
                 Arguments.arguments(
                         new Army().addUnits(UnitType.WARRIOR, 5),
                         new Army().addUnits(UnitType.WARRIOR, 7)
+                ),
+                Arguments.arguments(
+                        new Army()
+                                .addUnits(UnitType.WARRIOR, 1)
+                                .addUnits(UnitType.LANCER, 1)
+                                .addUnits(UnitType.DEFENDER, 2),
+                        new Army()
+                                .addUnits(UnitType.VAMPIRE, 3)
+                                .addUnits(UnitType.WARRIOR, 1)
+                                .addUnits(UnitType.LANCER, 2)
                 )
         );
     }

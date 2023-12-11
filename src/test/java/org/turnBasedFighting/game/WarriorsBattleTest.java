@@ -221,4 +221,54 @@ fight(unit_1, unit_2)''',
         assertEquals(Game.fight(myArmy1, enemyArmy1), Game.FightResult.SECOND_WIN);
         assertEquals(Game.fight(myArmy2, enemyArmy2), Game.FightResult.FIRST_WIN);
     }
+
+    @Test
+    void DefenderVsVampire() {
+        var defender = UnitType.DEFENDER.make();
+        var vampire = UnitType.VAMPIRE.make();
+
+        var result = Game.fight(defender, vampire);
+
+        assertAll(
+                () -> assertEquals(result, Game.FightResult.FIRST_WIN),
+                () -> assertEquals(22, defender.getHealth()),
+                () -> assertEquals(-1, vampire.getHealth())
+        );
+    }
+
+    @Test
+    void lancerSmokeTest() {
+        // Testing duels. Given units:
+        var chuck = UnitType.WARRIOR.make();
+        var bruce = UnitType.WARRIOR.make();
+        var carl = UnitType.KNIGHT.make();
+        var dave = UnitType.WARRIOR.make();
+        var mark = UnitType.WARRIOR.make();
+        var bob = UnitType.DEFENDER.make();
+        var mike = UnitType.KNIGHT.make();
+        var rog = UnitType.WARRIOR.make();
+        var lancelot = UnitType.DEFENDER.make();
+        var eric = UnitType.VAMPIRE.make();
+        var adam = UnitType.VAMPIRE.make();
+        var richard = UnitType.DEFENDER.make();
+        var ogre = UnitType.WARRIOR.make();
+        var freelancer = UnitType.LANCER.make();
+        var vampire = UnitType.VAMPIRE.make();
+
+        // Verify that:
+        assertEquals(Game.fight(chuck, bruce), Game.FightResult.FIRST_WIN);
+        assertEquals(Game.fight(dave, carl), Game.FightResult.SECOND_WIN);
+        assertTrue(chuck.isAlive());
+        assertFalse(bruce.isAlive());
+        assertTrue(carl.isAlive());
+        assertFalse(dave.isAlive());
+        assertEquals(Game.fight(carl, mark), Game.FightResult.SECOND_WIN);
+        assertFalse(carl.isAlive());
+        assertEquals(Game.fight(bob, mike), Game.FightResult.SECOND_WIN);
+        assertEquals(Game.fight(lancelot, rog), Game.FightResult.FIRST_WIN);
+        assertEquals(Game.fight(eric, richard), Game.FightResult.SECOND_WIN);
+        assertEquals(Game.fight(ogre, adam), Game.FightResult.FIRST_WIN);
+        assertEquals(Game.fight(freelancer, vampire), Game.FightResult.FIRST_WIN);
+        assertTrue(freelancer.isAlive());
+    }
 }

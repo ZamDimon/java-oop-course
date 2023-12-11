@@ -1,5 +1,5 @@
 package org.turnBasedFighting.game;
 
-public interface IHasDefence {
+public interface IDefendable {
     int getDefence();
 }
