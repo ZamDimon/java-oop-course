@@ -1,12 +1,13 @@
 package org.turnBasedFighting.game;
 
-public enum UnitClass {
-    WARRIOR, KNIGHT;
+public enum UnitType {
+    WARRIOR, KNIGHT, DEFENDER;
 
-    public static IUnit factory(UnitClass unitClass) {
+    public static IUnit factory(UnitType unitClass) {
         return switch (unitClass) {
             case WARRIOR -> new Warrior();
             case KNIGHT -> new Knight();
+            case DEFENDER -> new Defender();
         };
     }
 

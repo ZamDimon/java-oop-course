@@ -1,5 +1,8 @@
 package org.turnBasedFighting.game;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class AbstractUnit implements IUnit {
     private int health;
     private int attack;
@@ -34,11 +37,32 @@ public class AbstractUnit implements IUnit {
      */
     @Override
     public boolean hit(IUnit target) {
+        log.debug("{} tries to hit {}", this, target);
+
         if (target instanceof AbstractUnit abstractTarget) {
-            abstractTarget.setHealth(abstractTarget.getHealth() - getAttack());
-            return !abstractTarget.isAlive();
+            return abstractTarget.acceptDamage(getAttack());
         }
 
         throw new IllegalArgumentException("Unsupported type");
+    }
+
+    /** Function for getting damage from another entity
+     * @param damage - Damage to be taken
+     * @return Whether the unit was killed
+     */
+    protected boolean acceptDamage(int damage) {
+        log.debug("Unit {} accepts {} damage", this, damage);
+
+        setHealth(getHealth() - damage);
+        return !isAlive();
+    }
+
+    @Override
+    public String toString() {
+        String className = getClass().getSimpleName().toUpperCase();
+        return className +
+                "{health=" + getHealth() +
+                ",attack=" + getAttack() +
+                "}";
     }
 }

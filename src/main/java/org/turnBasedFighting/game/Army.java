@@ -15,7 +15,7 @@ public class Army implements Iterable<IUnit> {
         return this;
     }
 
-    public Army addUnits(UnitClass unitClass, int number) {
+    public Army addUnits(UnitType unitClass, int number) {
         return this.addUnits(unitClass::make, number);
     }
 

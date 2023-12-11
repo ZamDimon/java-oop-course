@@ -1,7 +1,6 @@
 package org.turnBasedFighting.game;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -24,22 +23,22 @@ class ArmiesBattleTest {
     static Stream<Arguments> armyPairsFirstWins() {
         return Stream.of(
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 20),
-                        new Army().addUnits(UnitClass.WARRIOR, 21)
+                        new Army().addUnits(UnitType.WARRIOR, 20),
+                        new Army().addUnits(UnitType.WARRIOR, 21)
                 ),
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 10),
-                        new Army().addUnits(UnitClass.WARRIOR, 11)
+                        new Army().addUnits(UnitType.WARRIOR, 10),
+                        new Army().addUnits(UnitType.WARRIOR, 11)
                 ),
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 11),
-                        new Army().addUnits(UnitClass.WARRIOR, 7)
+                        new Army().addUnits(UnitType.WARRIOR, 11),
+                        new Army().addUnits(UnitType.WARRIOR, 7)
                 ),
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 30),
+                        new Army().addUnits(UnitType.WARRIOR, 30),
                         new Army()
-                                .addUnits(UnitClass.WARRIOR, 20)
-                                .addUnits(UnitClass.KNIGHT, 5)
+                                .addUnits(UnitType.WARRIOR, 20)
+                                .addUnits(UnitType.KNIGHT, 5)
                 )
         );
     }
@@ -57,16 +56,16 @@ class ArmiesBattleTest {
     static Stream<Arguments> armyPairsSecondWins() {
         return Stream.of(
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 1),
-                        new Army().addUnits(UnitClass.WARRIOR, 2)
+                        new Army().addUnits(UnitType.WARRIOR, 1),
+                        new Army().addUnits(UnitType.WARRIOR, 2)
                 ),
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 2),
-                        new Army().addUnits(UnitClass.WARRIOR, 3)
+                        new Army().addUnits(UnitType.WARRIOR, 2),
+                        new Army().addUnits(UnitType.WARRIOR, 3)
                 ),
                 Arguments.arguments(
-                        new Army().addUnits(UnitClass.WARRIOR, 5),
-                        new Army().addUnits(UnitClass.WARRIOR, 7)
+                        new Army().addUnits(UnitType.WARRIOR, 5),
+                        new Army().addUnits(UnitType.WARRIOR, 7)
                 )
         );
     }
