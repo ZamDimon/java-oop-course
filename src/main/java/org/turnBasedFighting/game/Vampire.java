@@ -1,8 +1,9 @@
 package org.turnBasedFighting.game;
 
-public class Vampire extends AbstractUnit implements IVampirable{
+public class Vampire extends AbstractUnit implements IVampirable, IHitAndReportable {
     static final int DEFAULT_HEALTH = 40;
     static final int DEFAULT_ATTACK = 4;
+    /// Vampiring in percents
     static final int DEFAULT_VAMPIRING = 50;
 
     public Vampire() {
@@ -15,13 +16,7 @@ public class Vampire extends AbstractUnit implements IVampirable{
 
     @Override
     public void hit(IHittable target) {
-        // Dealing damage and fixating health before and after
-        int healthBefore = target.getHealth();
-        super.hit(target);
-        int healthAfter = target.getHealth();
-
-        // Healing yourself
-        int dealtDamage = healthBefore - healthAfter;
+        int dealtDamage = hitAndReportDealtDamage(target);
         healSelf(calculateHealingFromDamage(dealtDamage));
     }
 

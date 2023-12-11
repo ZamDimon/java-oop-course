@@ -1,5 +1,3 @@
 package org.turnBasedFighting.game;
 
-public interface IUnit extends IHealthable, IHittable, IHitting {
-    int getAttack();
-}
+public interface IUnit extends IHittable, IHitting {}

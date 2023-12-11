@@ -1,9 +1,6 @@
 package org.turnBasedFighting.game;
 
-import java.util.ArrayDeque;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -13,10 +10,65 @@ public class Army implements Iterable<IUnit> {
     private final int id = ++idCounter;
 
     // Data structure to store units
-    private final Queue<IUnit> troops = new ArrayDeque<>();
+    private final Deque<UnitInArmy> troops = new ArrayDeque<>();
+
+    private class UnitInArmy implements IUnitInArmy {
+        final IUnit unit;
+        IUnitInArmy nextUnit;
+
+        public UnitInArmy(IUnit unit) {
+            this.unit = Objects.requireNonNull(unit);
+        }
+
+        public void setNextUnit(IUnitInArmy nextUnit) {
+            this.nextUnit = Objects.requireNonNull(nextUnit);
+        }
+
+        @Override
+        public Optional<IUnit> getNextUnit() {
+            return Optional.ofNullable(nextUnit);
+        }
+
+        @Override
+        public boolean isAlive() {
+            return unit.isAlive();
+        }
+
+        @Override
+        public int getHealth() {
+            return unit.getHealth();
+        }
+
+        @Override
+        public int getAttack() {
+            return unit.getAttack();
+        }
+
+        @Override
+        public void hit(IHittable target) {
+            unit.hit(target);
+        }
+
+        @Override
+        public boolean acceptDamage(int damage) {
+            return unit.acceptDamage(damage);
+        }
+
+        @Override
+        public String toString() {
+            return unit.toString();
+        }
+    }
 
     public Army addUnits(Supplier<IUnit> unitFactory, int number) {
-        IntStream.rangeClosed(1, number).forEach(i -> troops.add(unitFactory.get()));
+        IntStream.rangeClosed(1, number).forEach(i -> {
+            IUnit unit = unitFactory.get();
+            var unitInArmy = new UnitInArmy(unit);
+            Optional.ofNullable(troops.peekLast())
+                    .ifPresent(last -> last.setNextUnit(unitInArmy));
+
+            troops.add(unitInArmy);
+        });
         return this;
     }
 
