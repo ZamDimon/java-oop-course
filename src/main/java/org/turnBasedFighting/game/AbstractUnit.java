@@ -1,5 +1,8 @@
 package org.turnBasedFighting.game;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class AbstractUnit implements IUnit {
     private int health;
     private int attack;
@@ -34,6 +37,8 @@ public class AbstractUnit implements IUnit {
      */
     @Override
     public boolean hit(IUnit target) {
+        log.info("Warrior {} hits {}", this, target);
+
         if (target instanceof AbstractUnit abstractTarget) {
             abstractTarget.setHealth(abstractTarget.getHealth() - getAttack());
             return !abstractTarget.isAlive();

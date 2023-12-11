@@ -22,8 +22,8 @@ jim = Knight()''',
     @Test
     @DisplayName("When warrior and knight fight, the latter should win")
     void Test_01() {
-        IUnit carl = UnitClass.WARRIOR.make();
-        IUnit jim = UnitClass.KNIGHT.make();
+        IUnit carl = UnitType.WARRIOR.make();
+        IUnit jim = UnitType.KNIGHT.make();
 
         Game.FightResult result = Game.fight(carl, jim);
 
@@ -41,8 +41,8 @@ slevin = Warrior()''',
     @Test
     @DisplayName("When knight and warrior fight, the former should win")
     void Test_02() {
-        IUnit ramon = UnitClass.KNIGHT.make();
-        IUnit slevin = UnitClass.WARRIOR.make();
+        IUnit ramon = UnitType.KNIGHT.make();
+        IUnit slevin = UnitType.WARRIOR.make();
 
         Game.FightResult result = Game.fight(ramon, slevin);
 
@@ -61,8 +61,8 @@ fight(bob, mars)''',
     @Test
     @DisplayName("When warrior and warrior fight, the first should be alive")
     void Test_03() {
-        IUnit bob = UnitClass.WARRIOR.make();
-        IUnit mars = UnitClass.WARRIOR.make();
+        IUnit bob = UnitType.WARRIOR.make();
+        IUnit mars = UnitType.WARRIOR.make();
 
         Game.fight(bob, mars);
 
@@ -81,8 +81,8 @@ fight(zeus, godkiller)''',
     @Test
     @DisplayName("When knight and warrior fight, the knight should stay alive")
     void Test_04() {
-        IUnit zeus = UnitClass.KNIGHT.make();
-        IUnit godkiller = UnitClass.WARRIOR.make();
+        IUnit zeus = UnitType.KNIGHT.make();
+        IUnit godkiller = UnitType.WARRIOR.make();
 
         Game.fight(zeus, godkiller);
 
@@ -101,8 +101,8 @@ fight(husband, wife)''',
     @Test
     @DisplayName("When warrior and warrior fight, the latter should not be alive")
     void Test_05() {
-        IUnit husband = UnitClass.WARRIOR.make();
-        IUnit wife = UnitClass.WARRIOR.make();
+        IUnit husband = UnitType.WARRIOR.make();
+        IUnit wife = UnitType.WARRIOR.make();
 
         Game.fight(husband, wife);
 
@@ -121,8 +121,8 @@ fight(dragon, knight)''',
     @Test
     @DisplayName("When warrior and knight fight, the knight should be alive")
     void Test_06() {
-        IUnit dragon = UnitClass.WARRIOR.make();
-        IUnit knight = UnitClass.KNIGHT.make();
+        IUnit dragon = UnitType.WARRIOR.make();
+        IUnit knight = UnitType.KNIGHT.make();
 
         Game.FightResult result = Game.fight(dragon, knight);
 
@@ -142,9 +142,9 @@ fight(unit_1, unit_2)''',
     @Test
     @DisplayName("When warrior and knights first fight, and then knight with another warrior, the last warrior should win")
     void Test_07() {
-        IUnit unit1 = UnitClass.WARRIOR.make();
-        IUnit unit2 = UnitClass.KNIGHT.make();
-        IUnit unit3 = UnitClass.WARRIOR.make();
+        IUnit unit1 = UnitType.WARRIOR.make();
+        IUnit unit2 = UnitType.KNIGHT.make();
+        IUnit unit3 = UnitType.WARRIOR.make();
 
         Game.FightResult resultFight1 = Game.fight(unit1, unit2);
         assertEquals(resultFight1, Game.FightResult.SECOND_WIN);
@@ -163,9 +163,10 @@ fight(unit_1, unit_2)''',
 
     static Stream<Arguments> warriorsPairsFirstWins() {
         return Stream.of(
-                Arguments.arguments(UnitClass.WARRIOR.make(), UnitClass.WARRIOR.make()),
-                Arguments.arguments(UnitClass.KNIGHT.make(), UnitClass.WARRIOR.make()),
-                Arguments.arguments(UnitClass.KNIGHT.make(), UnitClass.KNIGHT.make())
+                Arguments.arguments(UnitType.WARRIOR.make(), UnitType.WARRIOR.make()),
+                Arguments.arguments(UnitType.KNIGHT.make(), UnitType.WARRIOR.make()),
+                Arguments.arguments(UnitType.KNIGHT.make(), UnitType.KNIGHT.make()),
+                Arguments.arguments(UnitType.DEFENDER.make(), UnitType.WARRIOR.make())
         );
     }
 
@@ -178,7 +179,46 @@ fight(unit_1, unit_2)''',
 
     static Stream<Arguments> warriorsPairsSecondWins() {
         return Stream.of(
-                Arguments.arguments(UnitClass.WARRIOR.make(), UnitClass.KNIGHT.make())
+                Arguments.arguments(UnitType.WARRIOR.make(), UnitType.KNIGHT.make())
         );
+    }
+
+    @Test
+    void defenderSmokeTest() {
+        var chuck = UnitType.WARRIOR.make();
+        var bruce = UnitType.WARRIOR.make();
+        var carl = UnitType.KNIGHT.make();
+        var dave = UnitType.WARRIOR.make();
+        var mark = UnitType.WARRIOR.make();
+        var bob = UnitType.DEFENDER.make();
+        var mike = UnitType.KNIGHT.make();
+        var rog = UnitType.WARRIOR.make();
+        var lancelot = UnitType.DEFENDER.make();
+
+        // Making a fight between chuck and bruce + dave vs carl
+        assertEquals(Game.fight(chuck, bruce), Game.FightResult.FIRST_WIN);
+        assertEquals(Game.fight(dave, carl), Game.FightResult.SECOND_WIN);
+        assertTrue(chuck.isAlive());
+        assertFalse(bruce.isAlive());
+        assertTrue(carl.isAlive());
+        assertFalse(dave.isAlive());
+
+        // Making a fight Carl vs Mark
+        assertEquals(Game.fight(carl, mark), Game.FightResult.SECOND_WIN);
+        assertFalse(carl.isAlive());
+
+        // Making fights Bob vs Mike and Lancelot vs Rog
+        assertEquals(Game.fight(bob, mike), Game.FightResult.SECOND_WIN);
+        assertEquals(Game.fight(lancelot, rog), Game.FightResult.FIRST_WIN);
+
+        // Making fights 1D vs 2W and 1W+1D vs 2W
+        var myArmy1 = new Army().addUnits(UnitType.DEFENDER, 1);
+        var enemyArmy1 = new Army().addUnits(UnitType.WARRIOR, 2);
+        var myArmy2 = new Army().addUnits(UnitType.WARRIOR, 1).addUnits(UnitType.DEFENDER, 1);
+        var enemyArmy2 = new Army().addUnits(UnitType.WARRIOR, 2);
+
+        // 2W > 1D, 1W+1D > 2W
+        assertEquals(Game.fight(myArmy1, enemyArmy1), Game.FightResult.SECOND_WIN);
+        assertEquals(Game.fight(myArmy2, enemyArmy2), Game.FightResult.FIRST_WIN);
     }
 }
