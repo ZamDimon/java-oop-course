@@ -24,7 +24,8 @@ public class Lancer extends AbstractUnit implements IHitAndReportable {
             }
 
             int penetrationDamage = getPenetrationDamage(damageDealt);
-            nextBehind.get().acceptDamage(penetrationDamage);
+            IHitting proxySecondHitByLancer = () -> penetrationDamage;
+            proxySecondHitByLancer.hit(nextBehind.get());
         }
     }
 
