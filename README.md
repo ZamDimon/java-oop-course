@@ -15,4 +15,5 @@ To check specific homework, navigate to a branch `feature/homework-n` where `n` 
 | **Homework 5** | Setting up a logger. Polymorphism-based solution to `Defender` class.                                                                                                                                        |
 | **Homework 6** | Delegators code generation. Decorator. Splitting logic into interfaces. Mix-in. Implementing `IUnitInArmy` interface. Adding two units: `Vampire` and `Lancer`.                                              |
 | **Homework 7** | Chain of responsibilities and Command patterns. Overview of a Visitor pattern. Implementing a `Healer` class.                                                                                                |
+| **Homework 8** | Adapter and Composite patterns. Implementing a "Straight Fight" feature by adding `straightFight` method to the `Game` class.                                                                                |
 

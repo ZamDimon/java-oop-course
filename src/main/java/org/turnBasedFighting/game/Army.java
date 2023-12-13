@@ -114,7 +114,10 @@ public class Army implements Iterable<IUnit> {
     }
 
     public Iterator<IUnit> allAliveIterator() {
-        return new AllAliveIterator();
+        return troops.stream()
+                .filter(IUnit::isAlive)
+                .map(UnitInArmy::unwrap)
+                .iterator();
     }
 
     private class FirstAliveIterator implements Iterator<IUnit> {
@@ -130,28 +133,6 @@ public class Army implements Iterable<IUnit> {
         public IUnit next() {
             if (!hasNext()) throw new NoSuchElementException();
             return troops.peek();
-        }
-    }
-
-    private class AllAliveIterator implements Iterator<IUnit> {
-
-        Iterator<UnitInArmy> iterator = troops.iterator();
-        UnitInArmy cachedUnit;
-
-        @Override
-        public boolean hasNext() {
-            while (iterator.hasNext()) {
-                cachedUnit = iterator.next();
-                if (cachedUnit.isAlive()) return true;
-            }
-
-            return false;
-        }
-
-        @Override
-        public IUnit next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            return cachedUnit.unwrap();
         }
     }
 
