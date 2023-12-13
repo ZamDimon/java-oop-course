@@ -1,7 +1,7 @@
 package org.turnBasedFighting.game;
 
 public enum UnitType {
-    WARRIOR, KNIGHT, DEFENDER, VAMPIRE, LANCER;
+    WARRIOR, KNIGHT, DEFENDER, VAMPIRE, LANCER, HEALER;
 
     public static IUnit factory(UnitType unitClass) {
         return switch (unitClass) {
@@ -10,6 +10,7 @@ public enum UnitType {
             case DEFENDER -> new Defender();
             case VAMPIRE -> new Vampire();
             case LANCER -> new Lancer();
+            case HEALER -> new Healer();
         };
     }
 

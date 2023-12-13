@@ -51,6 +51,21 @@ class ArmiesBattleTest {
                                 .addUnits(UnitType.LANCER, 2)
                                 .addUnits(UnitType.DEFENDER, 2)
                                 .addUnits(UnitType.VAMPIRE, 3)
+                ),
+                Arguments.arguments(
+                        new Army()
+                                .addUnits(UnitType.LANCER, 7)
+                                .addUnits(UnitType.VAMPIRE, 3)
+                                .addUnits(UnitType.HEALER, 1)
+                                .addUnits(UnitType.WARRIOR, 4)
+                                .addUnits(UnitType.HEALER, 1)
+                                .addUnits(UnitType.DEFENDER, 2),
+                        new Army()
+                                .addUnits(UnitType.WARRIOR, 4)
+                                .addUnits(UnitType.DEFENDER, 4)
+                                .addUnits(UnitType.HEALER, 1)
+                                .addUnits(UnitType.VAMPIRE, 6)
+                                .addUnits(UnitType.LANCER, 4)
                 )
         );
     }
@@ -88,6 +103,21 @@ class ArmiesBattleTest {
                                 .addUnits(UnitType.VAMPIRE, 3)
                                 .addUnits(UnitType.WARRIOR, 1)
                                 .addUnits(UnitType.LANCER, 2)
+                ),
+                Arguments.arguments(
+                        new Army()
+                                .addUnits(UnitType.LANCER, 1)
+                                .addUnits(UnitType.WARRIOR, 3)
+                                .addUnits(UnitType.HEALER, 1)
+                                .addUnits(UnitType.WARRIOR, 4)
+                                .addUnits(UnitType.HEALER, 1)
+                                .addUnits(UnitType.KNIGHT, 2),
+                        new Army()
+                                .addUnits(UnitType.WARRIOR, 4)
+                                .addUnits(UnitType.DEFENDER, 4)
+                                .addUnits(UnitType.HEALER, 1)
+                                .addUnits(UnitType.VAMPIRE, 6)
+                                .addUnits(UnitType.LANCER, 4)
                 )
         );
     }
