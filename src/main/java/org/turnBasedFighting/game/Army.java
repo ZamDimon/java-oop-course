@@ -13,7 +13,7 @@ public class Army implements Iterable<IUnit> {
     private final Deque<UnitInArmy> troops = new ArrayDeque<>();
 
     public boolean isEmpty() {
-        return new FirstAliveIterator().hasNext();
+        return !new FirstAliveIterator().hasNext();
     }
 
     interface ICommand { }
