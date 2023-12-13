@@ -12,6 +12,10 @@ public class Army implements Iterable<IUnit> {
     // Data structure to store units
     private final Deque<UnitInArmy> troops = new ArrayDeque<>();
 
+    public boolean isEmpty() {
+        return new FirstAliveIterator().hasNext();
+    }
+
     interface ICommand { }
 
     interface IChampionHits extends ICommand {
@@ -48,6 +52,10 @@ public class Army implements Iterable<IUnit> {
         @Override
         public int getAttack() {
             return unit.getAttack();
+        }
+
+        private IUnit unwrap() {
+            return unit;
         }
 
         @Override
@@ -97,9 +105,19 @@ public class Army implements Iterable<IUnit> {
         return this.addUnits(unitClass::make, number);
     }
 
-    @Override
     public Iterator<IUnit> iterator() {
+        return firstAliveIterator();
+    }
+
+    public Iterator<IUnit> firstAliveIterator() {
         return new FirstAliveIterator();
+    }
+
+    public Iterator<IUnit> allAliveIterator() {
+        return troops.stream()
+                .filter(IUnit::isAlive)
+                .map(UnitInArmy::unwrap)
+                .iterator();
     }
 
     private class FirstAliveIterator implements Iterator<IUnit> {
