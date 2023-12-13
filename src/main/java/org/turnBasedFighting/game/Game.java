@@ -14,6 +14,7 @@ public class Game {
         while(first.isAlive() && second.isAlive()) {
             first.hit(second);
             if (!second.isAlive()) return FightResult.FIRST_WIN;
+
             second.hit(first);
             if (!first.isAlive()) return FightResult.SECOND_WIN;
         }

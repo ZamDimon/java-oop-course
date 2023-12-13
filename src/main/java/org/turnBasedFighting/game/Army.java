@@ -12,6 +12,12 @@ public class Army implements Iterable<IUnit> {
     // Data structure to store units
     private final Deque<UnitInArmy> troops = new ArrayDeque<>();
 
+    interface ICommand { }
+
+    interface IChampionHits extends ICommand {
+        IChampionHits INSTANCE = new IChampionHits(){};
+    }
+
     private class UnitInArmy implements IUnitInArmy {
         final IUnit unit;
         IUnitInArmy nextUnit;
@@ -47,11 +53,26 @@ public class Army implements Iterable<IUnit> {
         @Override
         public void hit(IHittable target) {
             unit.hit(target);
+            passCommand(IChampionHits.INSTANCE, this);
         }
 
         @Override
         public boolean acceptDamage(int damage) {
             return unit.acceptDamage(damage);
+        }
+
+        private void passCommand(ICommand command, IUnitInArmy sender) {
+            if (sender != this) {
+                // Custom handling passing command
+                if(command instanceof IChampionHits && unit instanceof IHealing healer) {
+                    healer.heal(sender);
+                }
+            }
+
+            getNextUnit().ifPresent(unit -> {
+                var unitInArmy = (UnitInArmy) unit;
+                unitInArmy.passCommand(IChampionHits.INSTANCE, this);
+            });
         }
 
         @Override
