@@ -25,13 +25,27 @@ public class Game {
     public static FightResult fight(Army first, Army second) {
         log.debug("Army {} fights against army {}", first, second);
 
-        var iteratorFirst = first.iterator();
-        var iteratorSecond = second.iterator();
+        var iteratorFirst = first.firstAliveIterator();
+        var iteratorSecond = second.firstAliveIterator();
 
         while(iteratorFirst.hasNext() && iteratorSecond.hasNext()) {
             fight(iteratorFirst.next(), iteratorSecond.next());
         }
 
         return iteratorFirst.hasNext()? FightResult.FIRST_WIN : FightResult.SECOND_WIN;
+    }
+
+    public static FightResult straightFight(Army first, Army second) {
+        log.debug("Army {} straight fights against army {}", first, second);
+
+        while(!first.isEmpty() && !second.isEmpty()) {
+            var iteratorFirst = first.allAliveIterator();
+            var iteratorSecond = second.allAliveIterator();
+            while (iteratorFirst.hasNext() && iteratorSecond.hasNext()) {
+                fight(iteratorFirst.next(), iteratorSecond.next());
+            }
+        }
+
+        return first.isEmpty()? FightResult.SECOND_WIN : FightResult.FIRST_WIN;
     }
 }
